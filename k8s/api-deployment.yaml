@@ -25,14 +25,14 @@ spec:
       containers:
         - env:
             - name: ALLOWED_HOSTS
-              value: localhost,api
+              value: "*"
             - name: CELERY_BROKER_URL
               valueFrom:
                 configMapKeyRef:
                   key: CELERY_BROKER_URL
                   name: backend-env
             - name: DASHBOARD_URL
-              value: http://localhost:9000/
+              value: "/"
             - name: DATABASE_URL
               valueFrom:
                 configMapKeyRef:
