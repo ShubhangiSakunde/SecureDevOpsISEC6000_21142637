@@ -34,7 +34,7 @@ spec:
             - containerPort: 5432
               protocol: TCP
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
+            - mountPath: /var/lib/postgresql-saleor/data
               name: saleor-db
             - mountPath: /docker-entrypoint-initdb.d/replica_user.sql
               name: db-cm1
