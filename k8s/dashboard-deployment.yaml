@@ -26,4 +26,7 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
+          env:
+            - name: API_URL
+              value: "/graphql/" # Replace this with the actual API URL
       restartPolicy: Always
