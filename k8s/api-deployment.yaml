@@ -70,7 +70,7 @@ spec:
                 configMapKeyRef:
                   key: SECRET_KEY
                   name: backend-env
-          image: ghcr.io/saleor/saleor:3.20
+          image: shubh26/saleor-api:latest
           name: api
           ports:
             - containerPort: 8000
@@ -81,6 +81,9 @@ spec:
             - mountPath: /app/media
               name: saleor-media
       restartPolicy: Always
+      securityContext:
+        runAsUser: 999
+        fsGroup: 999
       volumes:
         - name: saleor-media
           persistentVolumeClaim:

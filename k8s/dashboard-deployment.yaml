@@ -21,7 +21,7 @@ spec:
         io.kompose.service: dashboard
     spec:
       containers:
-        - image: ghcr.io/saleor/saleor-dashboard:latest
+        - image: shubh26/saleor-dashboard:latest
           name: dashboard
           ports:
             - containerPort: 80

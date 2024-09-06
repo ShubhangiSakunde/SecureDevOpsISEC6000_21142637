@@ -72,7 +72,7 @@ spec:
                 configMapKeyRef:
                   key: SECRET_KEY
                   name: backend-env
-          image: ghcr.io/saleor/saleor:3.20
+          image: shubh26/saleor-api:latest
           name: worker
           volumeMounts:
             - mountPath: /app/media
