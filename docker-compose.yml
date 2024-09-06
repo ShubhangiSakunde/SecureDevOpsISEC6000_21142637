@@ -1,6 +1,21 @@
+version: "3.4"
+
 services:
+  volume_setup:
+    image: busybox
+    volumes:
+      - saleor-media:/app/media
+    command: >
+      /bin/sh -c "
+      mkdir -p /app/media/products /app/media/thumbnails &&
+      chown -R 999:999 /app/media"
   api:
-    image: ghcr.io/saleor/saleor:3.20
+    # image: ghcr.io/saleor/saleor:3.20
+    image: shubh26/saleor-api:latest
+    user: "saleor"
+    build: 
+      dockerfile: ../saleor-api/Dockerfile
+      context: ./saleor-api
     ports:
       - 8000:8000
     restart: unless-stopped
@@ -12,6 +27,7 @@ services:
       - db
       - redis
       - jaeger
+      - volume_setup
     volumes:
       # shared volume between worker and api for media
       - saleor-media:/app/media
@@ -20,11 +36,15 @@ services:
       - backend.env
     environment:
       - JAEGER_AGENT_HOST=jaeger
-      - DASHBOARD_URL=http://localhost:9000/
+      - DASHBOARD_URL=http://localhost:9002/
       - ALLOWED_HOSTS=localhost,api
 
   dashboard:
-    image: ghcr.io/saleor/saleor-dashboard:latest
+    # image: ghcr.io/saleor/saleor-dashboard:latest
+    image: shubh26/saleor-dashboard:latest
+    build: 
+      dockerfile: ../saleor-dashboard/Dockerfile
+      context: ./saleor-dashboard
     ports:
       - 9002:80
     restart: unless-stopped
@@ -54,7 +74,8 @@ services:
       - saleor-redis:/data
 
   worker:
-    image: ghcr.io/saleor/saleor:3.20
+    image: shubh26/saleor-api:latest
+    user: "saleor"
     command: celery -A saleor --app=saleor.celeryconf:app worker --loglevel=info -B
     restart: unless-stopped
     networks:
@@ -65,6 +86,8 @@ services:
     depends_on:
       - redis
       - mailpit
+      - volume_setup
+
     volumes:
       # shared volume between worker and api for media
       - saleor-media:/app/media
@@ -101,6 +124,7 @@ volumes:
   saleor-redis:
     driver: local
   saleor-media:
+    
 
 networks:
   saleor-backend-tier:
