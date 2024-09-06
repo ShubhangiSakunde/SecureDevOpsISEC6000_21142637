@@ -36,12 +36,22 @@ ENV SKIP_SOURCEMAPS ${SKIP_SOURCEMAPS:-true}
 ENV LOCALE_CODE ${LOCALE_CODE:-EN}
 RUN npm run build
 
-FROM nginx:stable-alpine as runner
+FROM nginxinc/nginx-unprivileged as runner
 WORKDIR /app
+
+USER root
+
+# Create required directories for Nginx and set the correct ownership
+RUN mkdir -p /var/cache/nginx /var/run/nginx && \
+  chown -R nginx:nginx /var/cache/nginx /var/run /app && \
+  chmod 755 /var/run/nginx /var/cache/nginx
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./nginx/replace-env-vars.sh /docker-entrypoint.d/50-replace-env-vars.sh
 COPY --from=builder /app/build/ /app/
+
+
+USER nginx
 
 LABEL \
   org.opencontainers.image.title="saleor/saleor-dashboard" \
