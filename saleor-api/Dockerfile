@@ -41,8 +41,14 @@ RUN apt-get update \
 RUN echo 'image/webp webp' >> /etc/mime.types
 RUN echo 'image/avif avif' >> /etc/mime.types
 
-RUN mkdir -p /app/media /app/static \
-  && chown -R saleor:saleor /app/
+RUN mkdir -p /app/media /app/static /app/media/products /app/media/thumbnails/products \
+  && chown -R saleor:saleor /app \
+  && chmod -R 775 /app
+
+RUN chown -R saleor:saleor /app/media/products
+RUN chown -R saleor:saleor /app/media/thumbnails/products
+RUN chmod -R 755 /app/media/products
+
 
 COPY --from=build-python /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
@@ -57,12 +63,14 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1
 
 LABEL org.opencontainers.image.title="saleor/saleor"                                  \
-      org.opencontainers.image.description="\
-A modular, high performance, headless e-commerce platform built with Python, \
-GraphQL, Django, and ReactJS."                                                         \
-      org.opencontainers.image.url="https://saleor.io/"                                \
-      org.opencontainers.image.source="https://github.com/saleor/saleor"               \
-      org.opencontainers.image.authors="Saleor Commerce (https://saleor.io)"           \
-      org.opencontainers.image.licenses="BSD 3"
+  org.opencontainers.image.description="\
+  A modular, high performance, headless e-commerce platform built with Python, \
+  GraphQL, Django, and ReactJS."                                                         \
+  org.opencontainers.image.url="https://saleor.io/"                                \
+  org.opencontainers.image.source="https://github.com/saleor/saleor"               \
+  org.opencontainers.image.authors="Saleor Commerce (https://saleor.io)"           \
+  org.opencontainers.image.licenses="BSD 3"
+
+USER saleor
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "saleor.asgi.gunicorn_worker.UvicornWorker", "saleor.asgi:application"]
