@@ -1,3 +1,10 @@
+### Project Overview
+
+
+
+This project focuses on deploying and securing a modern e-commerce application using Saleor, a Python-based microservices platform. You will use Docker, Kubernetes, and Google Kubernetes Engine (GKE) to build, deploy, and manage the application. The goal is to gain practical experience in application deployment, security, and monitoring.
+
+
 
 ### Saleor Platform Overview
 
@@ -30,6 +37,8 @@ Before starting, ensure you have the following tools installed:
 1.  **kubectl**
 
 2.  **docker**
+
+3.  **gcloud**
 
   
 
@@ -947,6 +956,14 @@ Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 2, HIGH: 0, CRITICAL: 0)
 ===========================
 Total: 1 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 1, CRITICAL: 0)
 ```
+
+
+
+### Conclusion
+
+
+
+This project provides a hands-on experience in microservices-based e-commerce application deployment and security. By utilizing Docker, Kubernetes, and GKE, you will acquire important knowledge about configuring and overseeing scalable applications. Slick documentation and a flawless setup demonstration will show off your capacity to manage real-world DevOps issues and guarantee the effectiveness and security of contemporary e-commerce systems.
 
 
 
