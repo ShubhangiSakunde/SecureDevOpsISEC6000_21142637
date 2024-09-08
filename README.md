@@ -273,7 +273,7 @@ sudo snap install trivy
 ```shell
 trivy image <image name>
 ```
-## Trivy Reports
+## Trivy example reports
 ### 1. shubh26/saleor-dashboard:latest
 ```
 shubh26/saleor-dashboard:latest (alpine 3.20.2)
@@ -305,7 +305,7 @@ Total: 7 (UNKNOWN: 0, LOW: 0, MEDIUM: 4, HIGH: 0, CRITICAL: 3)
 │            │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2024-6119                   │
 └────────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴─────────────────────────────────────────────────────────────┘
 ```
-### 2. shubh26/saleor-api
+### 2. shubh26/saleor-api:latest
 ```
 
 shubh26/saleor-api:latest (debian 12.7)
